@@ -17,12 +17,17 @@ class CreateJustificacionTable extends Migration
             $table->id();
             // Id justificacdor
             $table->unsignedBigInteger('justificador_id');
+            $table->unsignedBigInteger('incidente_id'); 
 
-            // Referencias
             $table->unsignedBigInteger('pariente_id');
             $table->unsignedBigInteger('evidencia_id');
+
             $table->timestamps();
 
+
+            // Referencias
+            $table->foreign('incidente_id')->references('id')->on('incidentes'); 
+            $table->foreign('justificador_id')->references('id')->on('users');   
             $table->foreign('pariente_id')->references('id')->on('parientes');
             $table->foreign('evidencia_id')->references('id')->on('evidencias');
 

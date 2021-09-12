@@ -10,6 +10,7 @@
             <div class="card-header">BUSCAR ALUMNOS</div>
             <div class="card-body">
                 <form action="{{ route('asistencias.index') }}"  method="GET">
+                   
                     <div class="form-group row mt-4">
                         <label for="pal_buscar"  class="col-md-4 col-form-label text-md-right"  >Datos del alumno: </label>
                         <div class="col-md-6">
@@ -22,9 +23,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group row mb-0">
-                        <div class="offset-md-4">
-                            <input class="btn bg-primary text-white " type="submit" value="Buscar">
+                    <div class="form-group row mt-4">
+                        <div class="col-md-8 offset-md-4">
+                            <input class="btn btn-primary" type="submit" value="Buscar">
                         </div>
                     </div>
                 </form>
@@ -51,9 +52,9 @@
                                     <td>{{$contador}}</td>
                                     <td>{{$alumno->nombres}}</td>
                                     <td>{{$alumno->apellidos}}</td>
-                                    <td>({{$alumno->DNI}})</td>
+                                    <td>{{$alumno->DNI}}</td>
                                     <td>
-                                        <a href="{{ route('asistencias.create', ['id'=>$alumno->id]) }}">
+                                        <a href="{{ route('asistencias.incidencias', ['id'=>$alumno->id]) }}">
                                             <i class="fas fa-user-edit    "></i> ir a ficha
                                         </a>
                                     </td>

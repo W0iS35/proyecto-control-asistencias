@@ -10,5 +10,8 @@ class Alumno extends Model
     use HasFactory;
     protected $table = 'alumnos';
 
+    public function ficha_incidentes(){
+        return $this->hasMany('App\Models\Fichaincidente');
+    }
+
 }
-///             App\Models\Alumno

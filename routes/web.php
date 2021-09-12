@@ -15,14 +15,17 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('asistencias', [IncidenteController::class, 'index'])->name('asistencias.index');
-Route::get('asistencias/{id}', [IncidenteController::class, 'create'])->name('asistencias.create');
-
-
+//Rutas genericas y de autentricacion
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Rutas de ficha de asistencia
+Route::get('asistencias', [IncidenteController::class, 'index'])->name('asistencias.index');
+Route::get('asistencias/{id}', [IncidenteController::class, 'incidencias'])->name('asistencias.incidencias');
+Route::get('asistencias/crear/{id}', [IncidenteController::class, 'create'])->name('asistencias.create');
+Route::post('asistencias/crear', [IncidenteController::class, 'store'])->name('asistencias.store');
+
+
+

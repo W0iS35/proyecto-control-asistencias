@@ -18,13 +18,22 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+    <style>
+        .bg-cabrera{
+            background-color: #6f42c1;
+        }
+    </style>
+
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ route('home') }}">
-                    {{ config('app.name', 'Laravel') }}
+        <nav class="navbar navbar-expand-md navbar-dark  bg-cabrera shadow-sm">
+            <div class="container p-1">
+                <a class="navbar-brand " href="{{ route('home') }}">
+                    <img src="{{ asset('img/logo-colegio-cabrera-alt.png') }}" width="30px" alt="">
+                    IEP. Segundo Cabrera Muñoz
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -62,9 +71,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href=""
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="">
                                         Perfil
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"

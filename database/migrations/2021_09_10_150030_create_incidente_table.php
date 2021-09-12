@@ -22,9 +22,7 @@ class CreateIncidenteTable extends Migration
 
 
             // Referencias
-            $table->unsignedBigInteger('justificacion_id'); 
-            $table->foreign('justificacion_id')->references('id')->on('justificaciones');
-
+            $table->foreign('auxiliar_id')->references('id')->on('users');   
 
             $table->timestamps();
         });

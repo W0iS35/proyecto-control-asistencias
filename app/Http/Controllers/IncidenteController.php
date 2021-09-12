@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Alumno;
 use Symfony\Component\Console\Input\Input;
+use App\Models\Pariente;
 
 class IncidenteController extends Controller
 {
@@ -42,15 +43,19 @@ class IncidenteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function incidencias($id)
     {
         $alumno = Alumno::find($id);
-        return $alumno;
+        return view('incidente.incidentes')->with('alumno', $alumno);
+    }
 
-        //return ['state'=>false,'message'=> 'No se encontro al alumno...'];
+    
+    public function create($id)
+    {   
+        $parentesco = Pariente::all();
 
-  
-        
+
+        return view('incidente.create')->with('parentescos',$parentesco);
     }
 
     /**
@@ -61,7 +66,10 @@ class IncidenteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        var_dump($request);
+        die();
+        return "creando incidente...";
     }
 
     /**
