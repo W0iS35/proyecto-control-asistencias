@@ -11,11 +11,12 @@
                     <form method="POST" action="{{ route('asistencias.store') }}">
                         @csrf
 
+                        <input type="hidden" name="idAlumno" value="{{$idAlumno}}">
                         <div class="form-group row">
-                            <label for="descripcion" class="col-md-4 col-form-label text-md-right">Descripcion</label>
+                            <label for="descripcion" class="col-md-4 col-form-label text-md-right">Descripcion de  incidente</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" required  autofocus cols="30" rows="5" >{{ old('descripcion') }}</textarea>
+                                <textarea class="form-control @error('descr bipcion') is-invalid @enderror" name="descripcion" required  autofocus cols="30" rows="5" >{{ old('descripcion') }}</textarea>
                                 @error('descripcion')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -65,7 +66,8 @@
                                 </button>
                                 <a href="" class="btn btn-success"> 
                                     <i class="fa fa-edit" aria-hidden="true"></i>
-                                    Registrar Evidencia </a>
+                                    Registrar Evidencia 
+                                </a>
                             </div>
                         </div>
 

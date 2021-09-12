@@ -18,11 +18,14 @@ class CreateIncidenteTable extends Migration
 
             $table->unsignedBigInteger('auxiliar_id');
             $table->string('descripcion', 100);
+            $table->string('nombre_apoderado')->after('evidencia_id');
+            $table->unsignedBigInteger('pariente_id');
             $table->enum('estado', ['pendiente', 'resuelto']);
 
 
             // Referencias
-            $table->foreign('auxiliar_id')->references('id')->on('users');   
+            $table->foreign('auxiliar_id')->references('id')->on('users');  
+            $table->foreign('pariente_id')->references('id')->on('parientes'); 
 
             $table->timestamps();
         });

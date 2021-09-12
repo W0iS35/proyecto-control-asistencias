@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Alumno;
 use Symfony\Component\Console\Input\Input;
 use App\Models\Pariente;
+use App\Models\Incidente;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Fichaincidente;
 
 class IncidenteController extends Controller
 {
@@ -52,10 +55,13 @@ class IncidenteController extends Controller
     
     public function create($id)
     {   
+
         $parentesco = Pariente::all();
 
 
-        return view('incidente.create')->with('parentescos',$parentesco);
+
+        return view('incidente.create')->with('parentescos',$parentesco)
+                                        ->with('idAlumno', $id);
     }
 
     /**
@@ -66,9 +72,39 @@ class IncidenteController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'descripcion'=> ['required', 'string', 'max:255'],
+            'apoderado'=> ['required', 'string', 'max:255'],
+            'parentesco'=> ['required'],
+            'idAlumno'=>['required']
+        ]);
+
+        $descripcion = $request->input('descripcion');
+        //
+        $nomApoderado = $request->input('apoderado');
+        $parentesco = (int) $request->input('parentesco');
+        $idAlumno= (int) $request->input('idAlumno');
+        $alumno = Alumno::find($idAlumno); 
         
-        var_dump($request);
-        die();
+        if($alumno){
+            // Creando incidencia
+            $incidente = new Incidente();
+            $incidente->auxiliar_id = Auth::user()->id;
+            $incidente->descripcion = $descripcion;
+            $incidente->nombre_apoderado = $nomApoderado;
+            $incidente->pariente_id = $parentesco;
+            $incidente->estado = 'Pendiente';
+            $incidente->save();
+
+            // Registrando incidencia en la ficha de incidentes
+            $ficha = new Fichaincidente();
+            $ficha->incidente_id =  $incidente->id;
+            $ficha->alumno_id =  $alumno->id;
+            $ficha->save();
+
+            return redirect()->route('asistencias.incidencias',['id'=>$alumno->id]);
+        }
         return "creando incidente...";
     }
 

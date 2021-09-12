@@ -22,7 +22,7 @@
                 <!-- Botones ficha -->
                     <div class="form-group row mt-4">
                         <div class="col-md-8 offset-md-4  justify-content-end row">
-                            <a class="btn btn-primary" href="{{ route('asistencias.create', ['id'=>$alumno->id ]) }}" >
+                            <a class="btn btn-primary" href="{{ route('asistencias.create', ['id'=>$alumno->id]) }}"  >
                                 <i class="fa fa-plus" aria-hidden="true" ></i> Agregar
                             </a>
                             &nbsp;
