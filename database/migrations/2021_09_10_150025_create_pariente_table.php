@@ -13,7 +13,7 @@ class CreateParienteTable extends Migration
      */
     public function up()
     {
-        Schema::create('pariente', function (Blueprint $table) {
+        Schema::create('parientes', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 100);
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateParienteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pariente');
+        Schema::dropIfExists('parientes');
     }
 }

@@ -13,7 +13,7 @@ class CreateJustificacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('justificacion', function (Blueprint $table) {
+        Schema::create('justificaciones', function (Blueprint $table) {
             $table->id();
             // Id justificacdor
             $table->unsignedBigInteger('justificador_id');
@@ -23,8 +23,8 @@ class CreateJustificacionTable extends Migration
             $table->unsignedBigInteger('evidencia_id');
             $table->timestamps();
 
-            $table->foreign('pariente_id')->references('id')->on('pariente');
-            $table->foreign('evidencia_id')->references('id')->on('evidencia');
+            $table->foreign('pariente_id')->references('id')->on('parientes');
+            $table->foreign('evidencia_id')->references('id')->on('evidencias');
 
         });
     }
@@ -35,6 +35,6 @@ class CreateJustificacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('justificacion');
+        Schema::dropIfExists('justificaciones');
     }
 }

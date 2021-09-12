@@ -20,8 +20,8 @@ class CreateFichaIncidentesTable extends Migration
             $table->unsignedBigInteger('alumno_id');
 
             
-            $table->foreign('incidente_id')->references('id')->on('incidente');
-            $table->foreign('alumno_id')->references('id')->on('alumno');
+            $table->foreign('incidente_id')->references('id')->on('incidentes');
+            $table->foreign('alumno_id')->references('id')->on('alumnos');
 
 
             $table->timestamps();

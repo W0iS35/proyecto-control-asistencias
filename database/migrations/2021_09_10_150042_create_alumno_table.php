@@ -13,11 +13,11 @@ class CreateAlumnoTable extends Migration
      */
     public function up()
     {
-        Schema::create('alumno', function (Blueprint $table) {
+        Schema::create('alumnos', function (Blueprint $table) {
             $table->id();
-            $table->string('codAlumno',10)->unique();
+            $table->string('DNI',10)->unique();
             $table->string('nombres',30);
-            $table->string('apeliidos',30);
+            $table->string('apellidos',30);
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateAlumnoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alumno');
+        Schema::dropIfExists('alumnos');
     }
 }

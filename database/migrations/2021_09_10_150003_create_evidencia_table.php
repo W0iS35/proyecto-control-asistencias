@@ -13,7 +13,7 @@ class CreateEvidenciaTable extends Migration
      */
     public function up()
     {
-        Schema::create('evidencia', function (Blueprint $table) {
+        Schema::create('evidencias', function (Blueprint $table) {
             $table->id();
             $table->string('nombreArchivo', 100);
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateEvidenciaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evidencia');
+        Schema::dropIfExists('evidencias');
     }
 }

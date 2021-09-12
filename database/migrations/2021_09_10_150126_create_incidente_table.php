@@ -13,7 +13,7 @@ class CreateIncidenteTable extends Migration
      */
     public function up()
     {
-        Schema::create('incidente', function (Blueprint $table) {
+        Schema::create('incidentes', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('auxiliar_id');
@@ -23,7 +23,7 @@ class CreateIncidenteTable extends Migration
 
             // Referencias
             $table->unsignedBigInteger('justificacion_id'); 
-            $table->foreign('justificacion_id')->references('id')->on('justificacion');
+            $table->foreign('justificacion_id')->references('id')->on('justificaciones');
 
 
             $table->timestamps();
@@ -37,6 +37,6 @@ class CreateIncidenteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('incidente');
+        Schema::dropIfExists('incidentes');
     }
 }
