@@ -7,9 +7,12 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
-            <div class="card-header">BUSCAR ALUMNOS</div>
+            <div class="card-header">BUSCAR ALUMNOS
+
+            </div>
+            <div class="clearfix"></div>
             <div class="card-body">
-                <form action="{{ route('asistencias.index') }}"  method="GET">
+                <form action="{{ route('asistencias.index') }}" id='formulario' method="GET">
                    
                     <div class="form-group row mt-4">
                         <label for="pal_buscar"  class="col-md-4 col-form-label text-md-right"  >Datos del alumno: </label>

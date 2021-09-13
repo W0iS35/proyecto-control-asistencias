@@ -15,12 +15,9 @@ class CreateFichaIncidentesTable extends Migration
     {
         Schema::create('ficha_incidentes', function (Blueprint $table) {
             $table->id();
-
-            $table->unsignedBigInteger('incidente_id');
             $table->unsignedBigInteger('alumno_id');
 
             
-            $table->foreign('incidente_id')->references('id')->on('incidentes');
             $table->foreign('alumno_id')->references('id')->on('alumnos');
 
 

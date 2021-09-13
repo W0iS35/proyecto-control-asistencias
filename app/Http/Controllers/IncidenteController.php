@@ -49,7 +49,11 @@ class IncidenteController extends Controller
     public function incidencias($id)
     {
         $alumno = Alumno::find($id);
-        return view('incidente.incidentes')->with('alumno', $alumno);
+
+        //return $alumno->ficha_incidentes;
+        
+
+        return view('incidente.incidentes')->with('alumno', $alumno)->with('ficha_incidentes', $alumno->ficha_incidentes);
     }
 
     
@@ -88,20 +92,27 @@ class IncidenteController extends Controller
         $alumno = Alumno::find($idAlumno); 
         
         if($alumno){
+
+            // Verificando si existe ficha
+            $ficha = Fichaincidente::where('alumno_id', $alumno->id)->first();
+
+            if($ficha == null){
+                // Creando ficha de incidentes...
+                $ficha = new Fichaincidente();
+                $ficha->alumno_id=$idAlumno;
+                //return $ficha;
+                $ficha->save();
+            }
+            
             // Creando incidencia
             $incidente = new Incidente();
+            $incidente->ficha_id=$ficha->id;
             $incidente->auxiliar_id = Auth::user()->id;
             $incidente->descripcion = $descripcion;
             $incidente->nombre_apoderado = $nomApoderado;
             $incidente->pariente_id = $parentesco;
             $incidente->estado = 'Pendiente';
             $incidente->save();
-
-            // Registrando incidencia en la ficha de incidentes
-            $ficha = new Fichaincidente();
-            $ficha->incidente_id =  $incidente->id;
-            $ficha->alumno_id =  $alumno->id;
-            $ficha->save();
 
             return redirect()->route('asistencias.incidencias',['id'=>$alumno->id]);
         }
