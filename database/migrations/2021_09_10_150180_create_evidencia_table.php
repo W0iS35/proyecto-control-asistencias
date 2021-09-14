@@ -16,7 +16,12 @@ class CreateEvidenciaTable extends Migration
         Schema::create('evidencias', function (Blueprint $table) {
             $table->id();
             $table->string('nombreArchivo', 100);
+            $table->unsignedBigInteger('justificaciones_id');
+
             $table->timestamps();
+
+            
+            $table->foreign('justificaciones_id')->references('id')->on('justificaciones');
         });
     }
 

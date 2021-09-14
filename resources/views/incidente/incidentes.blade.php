@@ -68,7 +68,7 @@
                         <tr class=" {{($incidente->estado=='Pendiente')? 'bg-warning':'bg-light'}}">
                             <td  class="text-center" >{{$key}}</td>
                             <td>{{$incidente->usuario->name}} {{$incidente->usuario->surname}}</td>
-                            <td  class="text-center" > $incidente->created_at </td>
+                            <td  class="text-center" > {{$incidente->created_at }}</td>
                             <td> {{$incidente->descripcion}} </td>
                             <td> {{$incidente->nombre_apoderado}} <span class=" text-lowercase" style="color: #444"> ({{$incidente->parentesco->nombre}})</span> </td>
                             <td  class="text-center" >{{$incidente->estado}}</td>

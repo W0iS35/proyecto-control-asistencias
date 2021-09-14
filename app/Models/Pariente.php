@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Justificacion;
+use Illuminate\Support\Carbon;
 
 class Pariente extends Model
 {
@@ -15,5 +16,15 @@ class Pariente extends Model
     public function justificaciones(){
         return $this->HasMany('App\Models\Justificacion');
     } 
+    
+    protected $dateFormat = "Y-d-m H:i:s";
+
+    public function getCreatedAtAttribute($value){
+         return Carbon::parse($value)->format("Y-d-m H:i:s");
+     }
+ 
+     public function getUpdatedAtAttribute($value){
+         return Carbon::parse($value)->format("Y-d-m H:i:s");
+     }
 
 }

@@ -30,7 +30,6 @@ Route::post('asistencias/crear', [IncidenteController::class, 'store'])->name('a
 
 // Rutas de evidencias
 Route::get('evidencias/{id}', [EvidenciaController::class, 'index'])->name('evidencia.index');
-Route::get('evidencias/create{id}', [EvidenciaController::class, 'crearEvidencia'])->name('evidencia.create');
 Route::post('evidencias/{id}', [EvidenciaController::class, 'agregarEvidencia'])->name('evidencia.agregar');
 Route::delete('evidencias/{id}', [EvidenciaController::class, 'eliminarEvidencia'])->name('evidencia.eliminar');
 

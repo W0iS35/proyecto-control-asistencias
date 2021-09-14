@@ -25,7 +25,8 @@ class Evidencia extends Model
      }
 
     public function justificaciones(){
-        return $this->HasMany('App\Models\Justificacion');
+        return $this->belongsTo('App\Models\Justificacion','justificaciones_id');
     } 
+
 
 }

@@ -26,14 +26,14 @@ class Justificacion extends Model
 
     public function usuario(){
         return $this->belongsTo('App\Models\User','justificador_id');
-    }
+    } 
     
     public function incidentes(){
         return $this->belongsTo('App\Models\Incidente', 'incidente_id');
     }
     
     public function evidencias(){
-        return $this->hasMany('App\Models\Evidencia');
+        return $this->hasMany('App\Models\Evidencia','justificaciones_id','id');
     }
     
 

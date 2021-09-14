@@ -25,7 +25,7 @@
                         </div>
                         <div class="row mb-2">
                                 <span class=" col-md-5    text-md-right  text-uppercase"> Evidencias registradas: </span>  
-                                    <span class="col-md-5 font-weight-light text-capitalize">   {{ (count($incidencia->justificaciones)==0)? '0' : count($incidencia->justificaciones[0])  }}</span>
+                                    <span class="col-md-5 font-weight-light text-capitalize">   {{ (count($incidencia->justificaciones)==0)? '0' : count($incidencia->justificaciones[0]->evidencias)  }}</span>
                         </div>
                         <div class="align-content-end text-right mt-3">
                             
@@ -60,8 +60,54 @@
                                 </div>
                             </div>
                         </div>
-                        </div> 
+
                         <hr>
+
+                       @if (count($incidencia->justificaciones)==0)
+                           <h3>
+                               Aun no tienes evidencias registradas
+                           </h3>
+                       @else
+                           <table class="table table-sm table-light table-striped">
+                            <thead>
+                                <tr>
+                                    <td class="text-center table-dark font-weight-bold text-uppercase">Nro</td>
+                                    <td class="text-center table-dark font-weight-bold text-uppercase">Registro evidencia</td>
+                                    <td class="text-center table-dark font-weight-bold text-uppercase">Fecha</td>
+                                    <td class="text-center table-dark font-weight-bold text-uppercase">Acciones</td>
+                                </tr>
+                            </thead>
+                            <tbody class=" table-hover">
+                                <?php $i=0; ?>
+                                @foreach ($incidencia->justificaciones[0]->evidencias as $evidencia)
+                                <tr>
+                                    <td>{{$i}}</td>
+                                    <td>{{$evidencia->justificaciones->usuario->name}} {{$evidencia->justificaciones->usuario->surname}} ({{$evidencia->justificaciones->usuario->role}})</td>
+                                    <td>{{$evidencia->created_at}}</td>
+                                    <td> 
+                                        <a href="" class="text-primary">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                            Ver
+                                        </a>
+                                        &nbsp;
+                                        <a href="" class="text-secondary">
+                                            <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                            Descargar
+                                        </a>
+                                        &nbsp;
+                                        <a href="" class="text-danger">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                            Eliminar
+                                        </a>
+                                    </td>
+
+                                </tr>
+                                <?php $i++; ?>
+                                @endforeach
+                            </tbody>
+                           </table>
+                           
+                       @endif
 
                     </div>
 
