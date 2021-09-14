@@ -37,17 +37,15 @@ class EvidenciaController extends Controller
             'file_evidencia'=>['required']
         ]);
 
+
         $id = (int) $id;
         $incidente = Incidente::find($id);
         $file_evidencia = $request->file('file_evidencia');
-
+        
         if( $incidente && $file_evidencia){
             
 
             try{
-
-
-
             // Buscando y creando justificacion
                 // Obteniendo o creando justificacion   
                 $justificacion = Justificacion::where('incidente_id',$incidente->id)->first();
@@ -70,10 +68,11 @@ class EvidenciaController extends Controller
                 $evidencia->save();
                             
                 // Almacenar la imagen
-                Storage::disk('evidencias')->put($nombre, File::get($file_evidencia) );
+                Storage::disk('public')->put('evidencias/'.$nombre, File::get($file_evidencia) );
 
                 // Actualizando incidente
                 $incidente->estado = 'resuelto';
+                $incidente->save();
 
                 // Redirigir a la pagina de incidentes
                 return redirect()->route('evidencia.index',['id'=>$id])->with(['error'=>false, 'mensagge'=>'Se registro correctamente la incidencia']);
@@ -90,15 +89,46 @@ class EvidenciaController extends Controller
 
     }
 
-    public function eliminarEvidencia(){
+    public function eliminarEvidencia($id){
+
+        $evidencia = Evidencia::find($id);
+        if($evidencia){
+            
+            $justificacion =$evidencia->justificaciones;
+            $incidencia = $justificacion->incidentes;
+            $idIncidente = $incidencia->id;
+            
+            if( count($justificacion->evidencias)==0){
+                $evidencia->delete();
+                $justificacion->delete();
+                $incidencia->estado='pendiente';
+                $incidencia->save();
+                return redirect()->route('evidencia.index',['id'=>$idIncidente])->with(['error'=>false, 'mensagge'=>'Se elimino correctamente la justificacion']);
+            }
+            $evidencia->delete();
+            return redirect()->route('evidencia.index',['id'=>$idIncidente])->with(['error'=>false, 'mensagge'=>'Se elimino correctamente la evidencia']);
+        }
+        return 'Eliminando... Proximamente';
         return view('evidencia.index');
     }
+
+    public function show($nombre_archivo){
+        return view('evidencia.show')->with('nombre_archivo', $nombre_archivo);
+    }
+/*
+
 
     public function verEvidencia($nombre_archivo){
+        $file = Storage::disk('evidencias')->get($nombre_archivo);
+        return new Response($file,200);
 
-        return view('evidencia.index');
+        //return response('Hello word',200)->header('Content-Type', 'text/plain');-
+
+        //return response()->download($file)->header('Content-Type', 'text/plain');
+        //return view('evidencia.show')->with('img',new Response($file,200));	
     }
 
+*/
 
 
 

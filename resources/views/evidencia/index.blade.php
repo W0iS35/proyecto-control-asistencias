@@ -41,6 +41,9 @@
                                 <div class="modal-content p-3">
                                     <h3 class="text-center p-3" >Agregar evidencia</h3>
 
+                                    @error('file_evidencia')
+                                     <strong>* {{$message}}</strong>   
+                                    @enderror
                                     <form action="{{ route('evidencia.agregar', ['id'=>$incidencia->id]) }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group row">                                           
@@ -85,17 +88,17 @@
                                     <td>{{$evidencia->justificaciones->usuario->name}} {{$evidencia->justificaciones->usuario->surname}} ({{$evidencia->justificaciones->usuario->role}})</td>
                                     <td>{{$evidencia->created_at}}</td>
                                     <td> 
-                                        <a href="" class="text-primary">
+                                        <a href="{{ asset('storage/evidencias/'.$evidencia->nombreArchivo) }}" target="_blank" class="text-primary">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                             Ver
                                         </a>
                                         &nbsp;
-                                        <a href="" class="text-secondary">
+                                        <a href="{{ asset('storage/evidencias/'.$evidencia->nombreArchivo) }}" download class="text-secondary">
                                             <i class="fa fa-cloud-download" aria-hidden="true"></i>
                                             Descargar
                                         </a>
                                         &nbsp;
-                                        <a href="" class="text-danger">
+                                        <a href="{{ route('evidencia.eliminar', ['id'=>$evidencia->id]) }}" class="text-danger">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                             Eliminar
                                         </a>
