@@ -33,43 +33,83 @@
                         </div>
                     </div>
                 </form>
+
+
             
-                <!-- Mostrando resultados de busqueda -->
                 @if ($state)
+                <hr>
+                    <!-- INICIO ___ Mostrando resultados de busqueda -->
+                   @if ($busqueda)
+                   <h4>Resultados de busqueda</h4>
+                   <? $contador=1 ?>
+                   <table class="table bg-light table-sm table-striped">
+                       <thead>
+                           <tr>
+                               <th>Nro</th>
+                               <th>Nombre</th>
+                               <th>Apellidos</th>
+                               <th>DNI</th>
+                               <th>Acciones</th>
+                           </tr>
+                       </thead>
+                       <tbody>
+                           <?php $contador=1;  ?>
+                           @foreach ($alumnos as $alumno)
+                               <tr class="{{ (hasIncidente($alumno->id))? 'bg-warning':''  }}" >
+                                   <td>{{$contador}}</td>
+                                   <td>{{$alumno->nombres}}</td>
+                                   <td>{{$alumno->apellidos}}</td>
+                                   <td>{{$alumno->DNI}}</td>
+                                   <td>
+                                       <a href="{{ route('asistencias.incidencias', ['id'=>$alumno->id]) }}">
+                                           <i class="fas fa-user-edit    "></i> ir a ficha
+                                       </a>
+                                   </td>
+                               </tr>
+                           
+                               <?php $contador++;?>
+                           @endforeach
+                       </tbody>
+                   </table>
+                   <!-- FIN ___ Mostrando resultados de busqueda -->
+                   @else
+                      
                     <hr>
-                    <h4>Resultados de busqueda</h4>
-                    <? $contador=1 ?>
-                    <table class="table bg-light table-sm table-striped">
-                        <thead>
-                            <tr>
-                                <th>Nro</th>
-                                <th>Nombre</th>
-                                <th>Apellidos</th>
-                                <th>DNI</th>
-                                <th>Editar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $contador=1;  ?>
-                            @foreach ($alumnos as $alumno)
-                                <tr>
-                                    <td>{{$contador}}</td>
-                                    <td>{{$alumno->nombres}}</td>
-                                    <td>{{$alumno->apellidos}}</td>
-                                    <td>{{$alumno->DNI}}</td>
-                                    <td>
-                                        <a href="{{ route('asistencias.incidencias', ['id'=>$alumno->id]) }}">
-                                            <i class="fas fa-user-edit    "></i> ir a ficha
-                                        </a>
-                                    </td>
-                                </tr>
-                            
-                                <?php $contador++;?>
-                            @endforeach
-                        </tbody>
+                   <!-- INICIO --- Mostrando alumnos con evidencias pendientes -->
+                   <h4>Alumnos con evidencias pendientes</h4>
+                   <? $contador=1 ?>
+                   <table class="table bg-light table-sm table-striped">
+                       <thead>
+                           <tr>
+                               <th>Nro</th>
+                               <th>Nombre</th>
+                               <th>Apellidos</th>
+                               <th>DNI</th>
+                               <th>Acciones</th>
+                           </tr>
+                       </thead>
+                       <tbody>
+                           <?php $contador=1;  ?>
+                           @foreach ($alumnos as $alumno)
+                               <tr class="bg-warning" >
+                                   <td>{{$contador}}</td>
+                                   <td>{{$alumno->nombres}}</td>
+                                   <td>{{$alumno->apellidos}}</td>
+                                   <td>{{$alumno->DNI}}</td>
+                                   <td>
+                                       <a href="{{ route('asistencias.incidencias', ['id'=>$alumno->alumno_id]) }}">
+                                           <i class="fas fa-user-edit    "></i> ir a ficha
+                                       </a>
+                                   </td>
+                               </tr>
+                               <?php $contador++;?>
+                           @endforeach
+                       </tbody>
+                   </table>
+                @endif
+                <!-- FIN --- Mostrando alumnos con evidencias pendientes -->
 
 
-                    </table>
                 @endif
 
 

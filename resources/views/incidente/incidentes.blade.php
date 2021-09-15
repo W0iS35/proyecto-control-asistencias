@@ -93,14 +93,14 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Eliminar evidencia</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Eliminar incidente</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                ¿Esta seguro de eliminar la evidencia?
+                                                ¿Esta seguro de eliminar el incidente?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -109,7 +109,7 @@
                                                 </button>
 
                                                 <a href="{{ route('asistencias.eliminar', ['id'=>$incidente->id]) }}"
-                                                    class="btn btn-danger  p-0 pr-1 pl-1 ">
+                                                    class="btn btn-danger  ">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                     Eliminar
                                                 </a>

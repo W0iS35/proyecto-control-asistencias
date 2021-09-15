@@ -9,6 +9,8 @@ use App\Models\Incidente;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Fichaincidente;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+
 
 class IncidenteController extends Controller
 {
@@ -25,6 +27,7 @@ class IncidenteController extends Controller
 
     public function index(Request $request  )
     {
+        
         if($request->has('pal_buscar')){
 
             $alu_buscar = $request['pal_buscar'];
@@ -33,7 +36,21 @@ class IncidenteController extends Controller
                                 ->orWhere('nombres','LIKE',"%$alu_buscar%")
                                 ->orWhere('id','LIKE',"%$alu_buscar%")->get();
 
-            return view('incidente.index')->with(['state'=>true, 'alumnos'=>$alumnos]) ; 
+            return view('incidente.index')->with(['state'=>true, 'busqueda'=>true, 'alumnos'=>$alumnos]) ; 
+        }
+
+        $incidentes = Incidente::where('estado','LIKE','Pendiente');
+        if($incidentes){
+
+            // Obteniendo todos los alumnos que tienen incidentes en estado 'Pendiente'
+            $alumnos = DB::table('alumnos')->join('ficha_incidentes', 'alumnos.id','=','ficha_incidentes.alumno_id')
+                                ->join('incidentes','ficha_incidentes.id','=','incidentes.ficha_id')
+                                ->where('estado','LIKE','%endiente')
+                                ->groupBy('alumno_id', 'nombres','apellidos','DNI')
+                                ->get(['alumno_id', 'nombres','apellidos','DNI']);
+
+            return view('incidente.index')->with(['state'=>true, 'busqueda'=>false, 'alumnos'=>$alumnos]) ; 
+
         }
         return view('incidente.index')->with('state',false) ; 
     }

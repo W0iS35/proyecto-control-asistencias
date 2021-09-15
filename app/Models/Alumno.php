@@ -25,5 +25,6 @@ class Alumno extends Model
      public function getUpdatedAtAttribute($value){
          return Carbon::parse($value)->format("Y-d-m H:i:s");
      }
+/**/
 
 }

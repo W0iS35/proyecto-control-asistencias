@@ -70,7 +70,7 @@ class EvidenciaController extends Controller
                 Storage::disk('public')->put('evidencias/'.$nombre, File::get($file_evidencia) );
 
                 // Actualizando incidente
-                $incidente->estado = 'resuelto';
+                $incidente->estado = 'Resuelto';
                 $incidente->save();
 
                 // Redirigir a la pagina de incidentes
