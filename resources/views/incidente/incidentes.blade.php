@@ -7,7 +7,10 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
-            <div class="card-header">FICHA DE INCIDENCIAS</div>
+            <div class="card-header ">
+                <a href="{{ route('asistencias.index') }}" class="text-black-50">BUSCAR ALUMNOS </a>
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                <a href="" class="text-black-50"> FICHA DE INCIDENCIAS</a></div>
             <div class="card-body">
 
                 <!-- Inicio datos del alumno -->
@@ -31,10 +34,6 @@
                         <div class="col-md-8 offset-md-4  justify-content-end row">
                             <a class="btn btn-primary btn-sm" href="{{ route('asistencias.create', ['id'=>$alumno->id]) }}"  >
                                 <i class="fa fa-plus" aria-hidden="true" ></i> Agregar
-                            </a>
-                            &nbsp;
-                            <a class="btn btn-danger btn-sm" href="{{ route('asistencias.create', ['id'=>$alumno->id]) }}"  >
-                                <i class="fa fa-trash" aria-hidden="true" ></i> Eliminar
                             </a>
                             &nbsp;
                     </div>
@@ -73,13 +72,55 @@
                             <td> {{$incidente->nombre_apoderado}} <span class=" text-lowercase" style="color: #444"> ({{$incidente->parentesco->nombre}})</span> </td>
                             <td  class="text-center" >{{$incidente->estado}}</td>
                             <td class="text-center" > 
-                                <a href="{{ route('evidencia.index', ['id'=>$incidente->id]) }}" class=" btn btn-success p-0 pr-1 pl-1">
-                                    <abbr title="Agregar evidencia"><i class="fas fa-plus "> </i></abbr>
-                                </a>  
+                                <a href="{{ route('evidencia.index', ['id'=>$incidente->id]) }}"
+                                    class=" btn btn-success btn-sm ">
+                                    <abbr title="Agregar evidencia">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </abbr>
+                                </a>
                                 &nbsp;
-                                <a href="" class="btn btn-danger  p-0 pr-1 pl-1 ">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger btn-sm" 
+                                    data-toggle="modal" data-target="#exampleModal2">
                                     <abbr title="Eliminar incidente"><i class="fas fa-trash-alt "> </i></abbr>
-                                </a>   
+                                </button>
+
+
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Eliminar evidencia</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Esta seguro de eliminar la evidencia?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    <i class="fas fa-times    "></i>
+                                                    Cancelar
+                                                </button>
+
+                                                <a href="{{ route('asistencias.eliminar', ['id'=>$incidente->id]) }}"
+                                                    class="btn btn-danger  p-0 pr-1 pl-1 ">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    Eliminar
+                                                </a>
+
+
+
+
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
                             </td>
                         </tr>
                         <?php $key++; ?>

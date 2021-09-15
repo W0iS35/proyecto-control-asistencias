@@ -5,7 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">REGISTRAR INCIDENTE</div>
+                <div class="card-header">
+                    <a href="{{ route('asistencias.index') }}"  class="text-black-50">BUSCAR ALUMNOS </a>
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    <a href="" class="text-black-50" >REGISTRAR INCIDENTE</a>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('asistencias.store') }}">

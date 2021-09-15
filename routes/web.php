@@ -23,18 +23,20 @@ Auth::routes();
 
 
 // Rutas de ficha de asistencia
-Route::get('asistencias', [IncidenteController::class, 'index'])->name('asistencias.index');
-Route::get('asistencias/{id}', [IncidenteController::class, 'incidencias'])->name('asistencias.incidencias');
-Route::get('asistencias/crear/{id}', [IncidenteController::class, 'create'])->name('asistencias.create');
-Route::post('asistencias/crear', [IncidenteController::class, 'store'])->name('asistencias.store');
+Route::get('asistencias', [IncidenteController::class, 'index'])->name('asistencias.index');                                    // $request->has('pal_buscar')
+Route::get('asistencias/{id}', [IncidenteController::class, 'incidencias'])->name('asistencias.incidencias');                   // Alumno::find($id);
+Route::get('asistencias/crear/{id}', [IncidenteController::class, 'create'])->name('asistencias.create');                       // $id = alumno->id
+Route::get('asistencias/eliminar/{id}', [IncidenteController::class, 'eliminarIncidente'])->name('asistencias.eliminar');       // Incidente::find($id);
+Route::post('asistencias/crear', [IncidenteController::class, 'store'])->name('asistencias.store');                             // request (descripcion,apoderado,parentesco,idAlumno)
+                                                                                                                                // 
 
 // Rutas de evidencias
-Route::get('evidencias/{id}', [EvidenciaController::class, 'index'])->name('evidencia.index');
-Route::post('evidencias/{id}', [EvidenciaController::class, 'agregarEvidencia'])->name('evidencia.agregar');
-Route::get('evidencias/delete/{id}', [EvidenciaController::class, 'eliminarEvidencia'])->name('evidencia.eliminar');
+Route::get('evidencias/{id}', [EvidenciaController::class, 'index'])->name('evidencia.index');                                  // id = Incidente::find($id);
+Route::post('evidencias/{id}', [EvidenciaController::class, 'agregarEvidencia'])->name('evidencia.agregar');                    // id = Incidente::find($id);
+Route::get('evidencias/delete/{id}', [EvidenciaController::class, 'eliminarEvidencia'])->name('evidencia.eliminar');            // id = Evidencia::find($id);
 
-Route::get('evidencias/show/{nombre_archivo}', [EvidenciaController::class, 'show'])->name('evidencia.show');
+//Route::get('evidencias/show/{nombre_archivo}', [EvidenciaController::class, 'show'])->name('evidencia.show');
 //Route::get('evidencias/show/img/{nombre_archivo}', [EvidenciaController::class, 'verEvidencia'])->name('evidencia.ver');
 
-
+//[ 'error'=>true, 'message'=>'No se encontro el incidente']
 

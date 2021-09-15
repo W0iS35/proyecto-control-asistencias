@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alumno;
-use Symfony\Component\Console\Input\Input;
 use App\Models\Pariente;
 use App\Models\Incidente;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Fichaincidente;
+use Illuminate\Support\Facades\Storage;
 
 class IncidenteController extends Controller
 {
@@ -35,48 +35,28 @@ class IncidenteController extends Controller
 
             return view('incidente.index')->with(['state'=>true, 'alumnos'=>$alumnos]) ; 
         }
-
         return view('incidente.index')->with('state',false) ; 
-        //($pal_buscar==null)
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function incidencias($id)
     {
         $alumno = Alumno::find($id);
-
-        //return $alumno->ficha_incidentes;
-        
-
-        return view('incidente.incidentes')->with('alumno', $alumno)->with('ficha_incidentes', $alumno->ficha_incidentes);
+        return view('incidente.incidentes') ->with('alumno', $alumno)
+                                            ->with('ficha_incidentes', $alumno->ficha_incidentes);
     }
 
     
     public function create($id)
     {   
-
         $parentesco = Pariente::all();
-
-
-
         return view('incidente.create')->with('parentescos',$parentesco)
                                         ->with('idAlumno', $id);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-
         $request->validate([
             'descripcion'=> ['required', 'string', 'max:255'],
             'apoderado'=> ['required', 'string', 'max:255'],
@@ -85,14 +65,12 @@ class IncidenteController extends Controller
         ]);
 
         $descripcion = $request->input('descripcion');
-        //
         $nomApoderado = $request->input('apoderado');
         $parentesco = (int) $request->input('parentesco');
         $idAlumno= (int) $request->input('idAlumno');
         $alumno = Alumno::find($idAlumno); 
         
         if($alumno){
-
             // Verificando si existe ficha
             $ficha = Fichaincidente::where('alumno_id', $alumno->id)->first();
 
@@ -100,7 +78,6 @@ class IncidenteController extends Controller
                 // Creando ficha de incidentes...
                 $ficha = new Fichaincidente();
                 $ficha->alumno_id=$idAlumno;
-                //return $ficha;
                 $ficha->save();
             }
             
@@ -119,48 +96,39 @@ class IncidenteController extends Controller
         return "creando incidente...";
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function eliminarIncidente($id){
+
+        
+        $incidente = Incidente::find($id);
+
+        if($incidente){
+
+            $ficha= Fichaincidente::find($incidente->ficha_id);
+            
+            // Obteniendo tablas predecesoras
+            $justificaciones =  $incidente->justificaciones;
+            if(count($justificaciones)>0){
+                $evidencias = $justificaciones[0]->evidencias;
+                // Eliminando evidencias .... 
+                if(count($evidencias)){
+                    foreach($evidencias as $evidencia){
+
+                        // Eliminando archivo
+                         Storage::disk('public')->delete('evidencias/'.$evidencia->nombreArchivo);
+                        
+                        $evidencia->delete();
+                    }
+                }
+
+                // Eliminando justificaciones
+                $justificaciones[0]->delete();
+            }
+            // Eliminando incidente
+            $incidente->delete();
+
+            return redirect()->route('asistencias.incidencias',['id'=>$ficha->alumno_id]);
+        }
+        return redirect()->route('asistencias.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

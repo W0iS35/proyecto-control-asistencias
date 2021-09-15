@@ -7,7 +7,8 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
-            <div class="card-header">BUSCAR ALUMNOS
+            <div class="card-header">
+                <a href="{{ route('asistencias.index') }}" class="text-black-50">BUSCAR ALUMNOS</a>
 
             </div>
             <div class="clearfix"></div>
@@ -36,7 +37,7 @@
                 <!-- Mostrando resultados de busqueda -->
                 @if ($state)
                     <hr>
-                    <h3>Resultados de busqueda</h3>
+                    <h4>Resultados de busqueda</h4>
                     <? $contador=1 ?>
                     <table class="table bg-light table-sm table-striped">
                         <thead>

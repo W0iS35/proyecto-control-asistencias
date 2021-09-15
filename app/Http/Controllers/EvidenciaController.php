@@ -19,12 +19,12 @@ class EvidenciaController extends Controller
         $this->middleware('auth');
     }
 
-
     public function index($id){
         $incidencia = Incidente::find($id);
         if($incidencia){
          //   return $incidencia->justificaciones;
-            return view('evidencia.index')->with('incidencia', $incidencia);
+            return view('evidencia.index')->with('incidencia', $incidencia)
+                                          ->with('error',false);
         }
         return redirect()->route('asistencias.index')->with([ 'error'=>true, 'message'=>'No se encontro el incidente']);
     }
@@ -36,7 +36,6 @@ class EvidenciaController extends Controller
         $request->validate([
             'file_evidencia'=>['required']
         ]);
-
 
         $id = (int) $id;
         $incidente = Incidente::find($id);
@@ -77,7 +76,6 @@ class EvidenciaController extends Controller
                 // Redirigir a la pagina de incidentes
                 return redirect()->route('evidencia.index',['id'=>$id])->with(['error'=>false, 'mensagge'=>'Se registro correctamente la incidencia']);
 
-
                 }
                 catch(Exception $e){
                         return redirect()->route('evidencia.index',['id'=>$id])->with(['error'=>true, 'mensagge'=>'Ocurrio un error al cargar los datos']);
@@ -97,15 +95,20 @@ class EvidenciaController extends Controller
             $justificacion =$evidencia->justificaciones;
             $incidencia = $justificacion->incidentes;
             $idIncidente = $incidencia->id;
+
+            // Eliminar archivo ....
+            
+            Storage::disk('public')->delete('evidencias/'.$evidencia->nombreArchivo);
+                       
+            $evidencia->delete();
             
             if( count($justificacion->evidencias)==0){
-                $evidencia->delete();
                 $justificacion->delete();
-                $incidencia->estado='pendiente';
+                $incidencia->estado='Pendiente';
                 $incidencia->save();
                 return redirect()->route('evidencia.index',['id'=>$idIncidente])->with(['error'=>false, 'mensagge'=>'Se elimino correctamente la justificacion']);
             }
-            $evidencia->delete();
+
             return redirect()->route('evidencia.index',['id'=>$idIncidente])->with(['error'=>false, 'mensagge'=>'Se elimino correctamente la evidencia']);
         }
         return 'Eliminando... Proximamente';
