@@ -68,10 +68,6 @@
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     Crear incidente
                                 </button>
-                                <a href="" class="btn btn-success"> 
-                                    <i class="fa fa-edit" aria-hidden="true"></i>
-                                    Registrar Evidencia 
-                                </a>
                             </div>
                         </div>
                     </form>

@@ -18,7 +18,7 @@ class Evidencia extends Model
 
     public function getCreatedAtAttribute($value){
          return Carbon::parse($value)->format("Y-d-m H:i:s");
-     }
+    }
  
      public function getUpdatedAtAttribute($value){
          return Carbon::parse($value)->format("Y-d-m H:i:s");
@@ -27,6 +27,5 @@ class Evidencia extends Model
     public function justificaciones(){
         return $this->belongsTo('App\Models\Justificacion','justificaciones_id');
     } 
-
 
 }
